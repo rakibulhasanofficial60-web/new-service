@@ -21,7 +21,6 @@ const AdminBooking = () => {
 
     console.log(selectedBooking);
 
-    // Update Booking Handler - নতুন URL অনুযায়ী
     const handleUpdateBooking = async () => {
         if (!selectedBooking) return;
 
