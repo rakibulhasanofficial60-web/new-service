@@ -7,7 +7,7 @@ import { useState } from "react";
 import { generateId } from "./Map/generateId";
 
 const Address = () => {
-    const { itemSummary, vat, serviceCharge, showInput, setShowInput, address, serviceTitle, setLiveAddress } = useSummary();
+    const { itemSummary, vat, serviceCharge, showInput, setShowInput, liveAddress, serviceTitle, setLiveAddress } = useSummary();
     const [selectedType, setSelectedType] = useState("Apartment");
     const buttons = ["Apartment", "Villa", "Office", "Other"];
 
@@ -198,7 +198,7 @@ const Address = () => {
 
                 <Summery
                     serviceTitle={serviceTitle}
-                    address={address}
+                    liveAddress={liveAddress}
                     itemSummary={itemSummary}
                     total={serviceCharge + (serviceCharge * 0.05)}
                     subTotal={serviceCharge}

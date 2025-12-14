@@ -16,9 +16,7 @@ const DateTime = () => {
     const { data: dateTime, isLoading } = useQuery({
         queryKey: ['date-time-user'],
         queryFn: async () => {
-            const res = await fetch(
-                `${import.meta.env.VITE_BACKEND_API_URL}/date-time`
-            );
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/date-time`);
             if (!res.ok) {
                 throw new Error("Failed to fetch date-time");
             }

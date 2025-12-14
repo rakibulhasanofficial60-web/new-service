@@ -19,7 +19,7 @@ const AdminBooking = () => {
         },
     });
 
-console.log(selectedBooking);
+    console.log(selectedBooking);
 
     // Update Booking Handler - নতুন URL অনুযায়ী
     const handleUpdateBooking = async () => {
@@ -36,7 +36,7 @@ console.log(selectedBooking);
                         address: selectedBooking.address,
                         date: selectedBooking.date,
                         time: selectedBooking.time,
-                        
+
                         totalPay: selectedBooking.totalPay
                     }),
                 }
@@ -189,11 +189,16 @@ console.log(selectedBooking);
             </div>
 
             {/* MODAL FOR EDITING */}
+
+
+
+
             {selectedBooking && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white rounded-lg w-full max-w-2xl mx-4">
+                    <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
+
                         {/* Modal Header */}
-                        <div className="flex justify-between items-center p-6 border-b">
+                        <div className="flex justify-between items-center p-6 border-b shrink-0">
                             <h3 className="text-xl font-bold">Edit Booking</h3>
                             <button
                                 onClick={() => setSelectedBooking(null)}
@@ -203,8 +208,9 @@ console.log(selectedBooking);
                             </button>
                         </div>
 
-                        {/* Modal Body */}
-                        <div className="p-6 space-y-4">
+                        {/* Modal Body (Scrollable) */}
+                        <div className="p-6 space-y-4 overflow-y-auto flex-1">
+
                             {/* Status */}
                             <div>
                                 <label className="block text-sm font-medium mb-1">Status</label>
@@ -274,7 +280,7 @@ console.log(selectedBooking);
                         </div>
 
                         {/* Modal Footer */}
-                        <div className="flex justify-end gap-3 p-6 border-t">
+                        <div className="flex justify-end gap-3 p-6 border-t shrink-0">
                             <button
                                 className="px-4 py-2 border rounded hover:bg-gray-100"
                                 onClick={() => setSelectedBooking(null)}
@@ -292,124 +298,165 @@ console.log(selectedBooking);
                 </div>
             )}
 
+
+
+
+
+
+
+
+
+
+
             {/* DETAILS MODAL */}
-            {bookingDetails && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white rounded-lg w-full max-w-2xl mx-4">
-                        {/* Modal Header */}
-                        <div className="flex justify-between items-center p-6 border-b">
-                            <h3 className="text-xl font-bold">Booking Details</h3>
-                            <button
-                                onClick={() => setBookingDetails(null)}
-                                className="text-2xl hover:text-gray-600"
-                            >
-                                &times;
-                            </button>
+     
+
+
+
+
+
+
+
+
+
+
+     {bookingDetails && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
+            
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b shrink-0">
+                <h3 className="text-xl font-bold">Booking Details</h3>
+                <button
+                    onClick={() => setBookingDetails(null)}
+                    className="text-2xl hover:text-gray-600"
+                >
+                    &times;
+                </button>
+            </div>
+
+            {/* Modal Body (Scrollable) */}
+            <div className="p-6 space-y-4 overflow-y-auto flex-1">
+                
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <p className="text-sm text-gray-500">Booking ID</p>
+                        <p className="font-medium">{bookingDetails.id || "N/A"}</p>
+                    </div>
+
+                    {/* Status */}
+                    <div>
+                        <p className="text-sm text-gray-500">Status</p>
+                        <span
+                            className={`badge p-2 ${
+                                bookingDetails.status === 'Completed'
+                                    ? 'badge-success'
+                                    : bookingDetails.status === 'Ongoing'
+                                    ? 'badge-warning'
+                                    : bookingDetails.status === 'Cancelled'
+                                    ? 'badge-error'
+                                    : 'badge-info'
+                            } text-white`}
+                        >
+                            {bookingDetails.status}
+                        </span>
+                    </div>
+                </div>
+
+                {/* Service Details */}
+                <div className="border-t pt-4">
+                    <h4 className="font-bold text-lg mb-2">Service Details</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-sm text-gray-500">Service Name</p>
+                            <p className="font-medium">{bookingDetails.serviceName}</p>
                         </div>
-
-                        {/* Modal Body */}
-                        <div className="p-6 space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p className="text-sm text-gray-500">Booking ID</p>
-                                    <p className="font-medium">{bookingDetails.id || "N/A"}</p>
-                                </div>
-
-                                {/* Status */}
-                                <div>
-                                    <p className="text-sm text-gray-500">Status</p>
-                                    <span className={`badge p-2 ${bookingDetails.status === 'Completed' ? 'badge-success' :
-                                        bookingDetails.status === 'Ongoing' ? 'badge-warning' :
-                                            bookingDetails.status === 'Cancelled' ? 'badge-error' : 'badge-info'
-                                        } text-white`}>
-                                        {bookingDetails.status}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Service Details */}
-                            <div className="border-t pt-4">
-                                <h4 className="font-bold text-lg mb-2">Service Details</h4>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-500">Service Name</p>
-                                        <p className="font-medium">{bookingDetails.serviceName}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Amount</p>
-                                        <p className="font-medium">${bookingDetails.totalPay}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Date & Time */}
-                            <div className="border-t pt-4">
-                                <h4 className="font-bold text-lg mb-2">Schedule</h4>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-500">Date</p>
-                                        <p className="font-medium">{bookingDetails.date}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Time</p>
-                                        <p className="font-medium">{bookingDetails.time}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Address */}
-                            <div className="border-t pt-4">
-                                <h4 className="font-bold text-lg mb-2">Address</h4>
-                                <p className="bg-gray-50 p-3 rounded">{bookingDetails.address}</p>
-                            </div>
-
-                            {/* Additional Information */}
-                            {bookingDetails.additionalInfo && (
-                                <div className="border-t pt-4">
-                                    <h4 className="font-bold text-lg mb-2">Additional Information</h4>
-                                    <p className="bg-gray-50 p-3 rounded">{bookingDetails.additionalInfo}</p>
-                                </div>
-                            )}
-
-                            {/* Payment Information */}
-                            <div className="border-t pt-4">
-                                <h4 className="font-bold text-lg mb-2">Payment</h4>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <p className="text-sm text-gray-500">Payment Method</p>
-                                        <p className="font-medium">{bookingDetails.paymentMethod || "Credit Card"}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-500">Payment Status</p>
-                                        <span className={`badge p-2 ${bookingDetails.paymentStatus === 'Paid' ? 'badge-success' : 'badge-error'} text-white`}>
-                                            {bookingDetails.paymentStatus || "Pending"}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Modal Footer */}
-                        <div className="flex justify-end gap-3 p-6 border-t">
-                            <button
-                                className="px-4 py-2 border rounded hover:bg-gray-100"
-                                onClick={() => setBookingDetails(null)}
-                            >
-                                Close
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                                onClick={() => {
-                                    setSelectedBooking(bookingDetails);
-                                    setBookingDetails(null);
-                                }}
-                            >
-                                Edit Booking
-                            </button>
+                        <div>
+                            <p className="text-sm text-gray-500">Amount</p>
+                            <p className="font-medium">${bookingDetails.totalPay}</p>
                         </div>
                     </div>
                 </div>
-            )}
+
+                {/* Date & Time */}
+                <div className="border-t pt-4">
+                    <h4 className="font-bold text-lg mb-2">Schedule</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-sm text-gray-500">Date</p>
+                            <p className="font-medium">{bookingDetails.date}</p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">Time</p>
+                            <p className="font-medium">{bookingDetails.time}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Address */}
+                <div className="border-t pt-4">
+                    <h4 className="font-bold text-lg mb-2">Address</h4>
+                    <p className="bg-gray-50 p-3 rounded">{bookingDetails.address}</p>
+                </div>
+
+                {/* Additional Information */}
+                {bookingDetails.additionalInfo && (
+                    <div className="border-t pt-4">
+                        <h4 className="font-bold text-lg mb-2">Additional Information</h4>
+                        <p className="bg-gray-50 p-3 rounded">
+                            {bookingDetails.additionalInfo}
+                        </p>
+                    </div>
+                )}
+
+                {/* Payment Information */}
+                <div className="border-t pt-4">
+                    <h4 className="font-bold text-lg mb-2">Payment</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-sm text-gray-500">Payment Method</p>
+                            <p className="font-medium">
+                                {bookingDetails.paymentMethod || "Credit Card"}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-500">Payment Status</p>
+                            <span
+                                className={`badge p-2 ${
+                                    bookingDetails.paymentStatus === 'Paid'
+                                        ? 'badge-success'
+                                        : 'badge-error'
+                                } text-white`}
+                            >
+                                {bookingDetails.paymentStatus || "Pending"}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex justify-end gap-3 p-6 border-t shrink-0">
+                <button
+                    className="px-4 py-2 border rounded hover:bg-gray-100"
+                    onClick={() => setBookingDetails(null)}
+                >
+                    Close
+                </button>
+                <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    onClick={() => {
+                        setSelectedBooking(bookingDetails);
+                        setBookingDetails(null);
+                    }}
+                >
+                    Edit Booking
+                </button>
+            </div>
+        </div>
+    </div>
+)}
+
         </div>
     );
 };
