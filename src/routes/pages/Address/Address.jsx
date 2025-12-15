@@ -21,7 +21,6 @@ const Address = () => {
             ...data,
             displayAddress: formatDisplayAddress(selectedType, data)
         };
-        // saveAddress(finalData);
         setLiveAddress(finalData);
         return true;
     };
@@ -194,11 +193,10 @@ const Address = () => {
                         </form>
                     </div>
                 </div>
-                {/* <Summery serviceTitle={serviceTitle} liveAddress={liveAddress} itemSummary={itemSummary} total={total} showInput={showInput} setShowInput={setShowInput} vat={vat} serviceCharge={serviceCharge} /> */}
 
                 <Summery
                     serviceTitle={serviceTitle}
-                    liveAddress={liveAddress}
+                    address={liveAddress}
                     itemSummary={itemSummary}
                     total={serviceCharge + (serviceCharge * 0.05)}
                     subTotal={serviceCharge}
