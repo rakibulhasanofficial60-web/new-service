@@ -7,11 +7,15 @@ import { useState } from "react";
 import { generateId } from "./Map/generateId";
 
 const Address = () => {
-    const { itemSummary, vat, serviceCharge, showInput, setShowInput, liveAddress, serviceTitle, setLiveAddress } = useSummary();
+    const { itemSummary, vat, serviceCharge, showInput, setShowInput, serviceTitle, setLiveAddress } = useSummary();
+
     const [selectedType, setSelectedType] = useState("Apartment");
     const buttons = ["Apartment", "Villa", "Office", "Other"];
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: "onChange" });
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+        mode: "onChange",
+        shouldUnregister: true
+    });
     const id = generateId();
 
     const onSubmit = (data) => {
@@ -22,6 +26,7 @@ const Address = () => {
             displayAddress: formatDisplayAddress(selectedType, data)
         };
         setLiveAddress(finalData);
+        console.log(finalData);
         return true;
     };
 
@@ -43,16 +48,13 @@ const Address = () => {
     };
 
     const handleNextClick = async () => {
-        try {
-            const result = await handleSubmit(onSubmit)();
-            if (result !== false) {
-                return true;
-            }
-            return false;
-        } catch (error) {
-            console.log("Form validation failed", error);
-            return false;
-        }
+        const result = await handleSubmit(onSubmit)();
+        return result !== false;
+    };
+
+
+    const handleTypeChange = (type) => {
+        setSelectedType(type);
     };
 
     return (
@@ -69,7 +71,7 @@ const Address = () => {
                             {buttons.map(btn => (
                                 <button
                                     key={btn}
-                                    onClick={() => setSelectedType(btn)}
+                                    onClick={() => handleTypeChange(btn)}
                                     type="button"
                                     className={`flex items-center px-4 py-2 rounded-full transition duration-300 border cursor-pointer
                                     ${selectedType === btn ? "bg-teal-600 text-white shadow-md" : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
@@ -194,18 +196,7 @@ const Address = () => {
                     </div>
                 </div>
 
-                <Summery
-                    serviceTitle={serviceTitle}
-                    address={liveAddress}
-                    itemSummary={itemSummary}
-                    total={serviceCharge + (serviceCharge * 0.05)}
-                    subTotal={serviceCharge}
-                    showInput={showInput}
-                    setShowInput={setShowInput}
-                    vat={vat}
-                    serviceCharge={serviceCharge}
-                />
-
+                <Summery serviceTitle={serviceTitle} itemSummary={itemSummary} total={serviceCharge + (serviceCharge * 0.05)} subTotal={serviceCharge} showInput={showInput} setShowInput={setShowInput} vat={vat} serviceCharge={serviceCharge} />
             </div>
 
             <div className="hidden md:block">

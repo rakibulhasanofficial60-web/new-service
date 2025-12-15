@@ -17,35 +17,6 @@ export default function Summery({ total, showInput, setShowInput, vat, subTotal,
         setShowInput(false);
     };
 
-
-    const renderAddress = () => {
-        const currentAddress = liveAddress || (address && address.length > 0 ? address[address.length - 1] : null);
-        if (!currentAddress) {
-            return <p className="text-gray-500">No address provided</p>;
-        }
-
-        const { type, city, area, buildingName, apartmentNo, community, villaNo, nickname, streetName, otherNo } = currentAddress;
-
-        const addressParts = [];
-        if (type === "Apartment" || type === "Office") {
-            apartmentNo && addressParts.push(`${apartmentNo}`);
-            buildingName && addressParts.push(buildingName);
-        } else if (type === "Villa") {
-            villaNo && addressParts.push(`Villa ${villaNo}`);
-            community && addressParts.push(community);
-        } else if (type === "Other") {
-            nickname && addressParts.push(nickname);
-            otherNo && addressParts.push(otherNo);
-            streetName && addressParts.push(streetName);
-        }
-        area && addressParts.push(area);
-        city && addressParts.push(city);
-
-        return (
-            <p>{addressParts.join(", ")}</p>
-        );
-    };
-
     return (
         <>
             {/* DESKTOP SUMMARY */}
@@ -111,9 +82,9 @@ export default function Summery({ total, showInput, setShowInput, vat, subTotal,
                     {/* Address Section - DESKTOP */}
                     {(liveAddress || (address && address.length > 0)) && (
                         <div className="border-b border-gray-400 mt-2">
-                            <h3 className="font-semibold text-sm mb-2">Address</h3>
-                            <div className="text-sm text-gray-700">
-                                {renderAddress()}
+                            <h3 className="font-semibold text-[16px] mb-2">Address</h3>
+                            <div className="text-[16px] text-gray-700">
+                                {address}
                             </div>
                         </div>
                     )}
@@ -231,7 +202,7 @@ export default function Summery({ total, showInput, setShowInput, vat, subTotal,
                     {(liveAddress || (address && address.length > 0)) && (
                         <div className="pt-2 border-t text-sm leading-relaxed">
                             <p className="font-semibold">Address:</p>
-                            {renderAddress()}
+                            {address}
                         </div>
                     )}
 

@@ -5,17 +5,18 @@ import { steps } from "./FlowSteps";
 const NextBtn = ({ name = "Next", disabled, onClick }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { addressLocation, date, time, liveAddress } = useSummary();
+    const { addressLocation, date, time } = useSummary();
 
     const currentIndex = steps.indexOf(pathname);
     let nextPath = steps[currentIndex + 1];
     let isDisabled = disabled ?? false;
 
-    if (pathname === "/location" || pathname === "/address") {
-        if (!addressLocation && !liveAddress) {
+    if (pathname === "/location") {
+        if (!addressLocation) {
             isDisabled = true;
         }
     }
+
     if (pathname === "/date-time" && (!date || !time)) isDisabled = true;
 
     const handleClick = async () => {
